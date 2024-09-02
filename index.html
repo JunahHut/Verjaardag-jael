@@ -98,23 +98,29 @@
             overflow: hidden;
             transition: transform 0.3s ease;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            height: 250px; /* Fixed height for gallery items */
+            display: flex;
+            flex-direction: column;
+            justify-content: center; /* Center image vertically */
+        }
+
+        .gallery-item img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover; /* Ensure image covers the container */
+            border-radius: 8px;
+            transition: transform 0.3s ease;
         }
 
         .gallery-item:hover {
             transform: scale(1.05);
         }
 
-        .gallery-item img {
-            width: 100%;
-            border-radius: 8px;
-            transition: transform 0.3s ease;
-        }
-
         .gallery-item:hover img {
             transform: scale(1.1);
         }
 
-        .gallery-item .story {
+        .story {
             margin-top: 10px;
             font-size: 14px;
         }
@@ -204,7 +210,7 @@
         <div class="gallery">
             <div class="gallery-item">
                 <img src="https://pbs.twimg.com/media/GWfOzXbXIAAh5aW?format=jpg&name=large" alt="Image 1">
-                <div class="story">Om deze prachtige website te openen, kleine schattige jaël. Hier was je nog heel veel jonger dan nu en dit jaar is het meisje toch echt 19 geworden. Tuurlijk blijf je nogsteeds je gekke oude zelf maar word je ook weer een stukje volwassener! </div>
+                <div class="story">Om deze prachtige website te openen, kleine schattige jaël. Hier was je nog heel veel jonger dan nu en dit jaar is het meisje toch echt 19 geworden. Tuurlijk blijf je nogsteeds je gekke oude zelf maar word je ook weer een stukje volwassener!</div>
             </div>
             <div class="gallery-item">
                 <img src="https://pbs.twimg.com/media/GWfOzXUXgAA_BxH?format=jpg&name=large" alt="Image 2">
@@ -212,7 +218,7 @@
             </div>
         </div>
     </section>
-        <section id="section1">
+    <section id="section1">
         <h2></h2>
         <div class="gallery">
             <div class="gallery-item">
@@ -225,7 +231,7 @@
             </div>
         </div>
     </section>
-            <section id="section1">
+    <section id="section1">
         <h2></h2>
         <div class="gallery">
             <div class="gallery-item">
