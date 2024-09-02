@@ -3,7 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Music Library</title>
     <style>
         /* Colors */
         :root {
@@ -45,6 +44,41 @@
             color: var(--color-text);
         }
 
+        .present-container {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .present-icon {
+            width: 40px;
+            cursor: pointer;
+        }
+
+        .navbar {
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 10px;
+            background-color: var(--color-bg-alt);
+            position: absolute;
+            top: 50px; /* Positions the menu below the header */
+            left: 10px; /* Aligns the menu to the right side of the screen */
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: var(--color-text);
+            padding: 8px 0;
+            transition: color 0.3s;
+        }
+
+        .navbar a:hover {
+            color: var(--color-card-hover);
+        }
+
         .container {
             padding: 80px 20px 20px;
             max-width: 1000px;
@@ -53,122 +87,108 @@
 
         .gallery {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: repeat(2, 1fr);
             gap: 20px;
         }
 
-        .album-item {
+        .gallery-item {
             background-color: var(--color-card);
-            padding: 10px;
             border-radius: 8px;
             overflow: hidden;
-            position: relative;
-            cursor: pointer;
             transition: transform 0.3s ease;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            text-align: center;
-        }
-
-        .album-item img {
+            /* Rectangular aspect ratio: width 3 times height (3:2 ratio) */
             width: 100%;
-            border-radius: 8px;
+            height: 200px; /* Fixed height for gallery items */
+            display: flex;
+            align-items: center;
+            justify-content: center;
         }
 
-        /* LP Disc */
-        .lp {
-            position: absolute;
-            top: 50%;
-            left: 10px;
-            width: 110%;
+        .gallery-item img {
+            width: 100%;
             height: 100%;
-            border-radius: 50%;
-            background: radial-gradient(circle, #000 70%, #333 100%);
-            transform: translateY(-50%) translateX(-110%); /* Start position off-screen */
-            transition: transform 0.6s ease;
-            z-index: 10;
-            overflow: hidden;
+            object-fit: cover; /* Ensure image covers the container */
+            border-radius: 8px;
+            transition: transform 0.3s ease;
         }
 
-        /* LP Label (center of the disc) */
-        .lp-label {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            width: 35%;
-            height: 35%;
-            border-radius: 50%;
-            transform: translate(-50%, -50%);
+        .gallery-item:hover {
+            transform: scale(1.05);
         }
 
-        /* Different colors for each LP */
-        .album-item[data-color="red"] .lp-label {
-            background-color: #f0921a; /* Red */
+        .gallery-item:hover img {
+            transform: scale(1.1);
         }
 
-        .album-item[data-color="blue"] .lp-label {
-            background-color: #4a931b; /* Blue */
-        }
-
-        .album-item[data-color="green"] .lp-label {
-            background-color: #982213; /* Green */
-        }
-
-        .album-item[data-color="yellow"] .lp-label {
-            background-color: #9c9695; /* Yellow */
-        }
-
-        .album-item[data-color="purple"] .lp-label {
-            background-color: #2686d1; /* Purple */
-        }
-
-        .album-item[data-color="orange"] .lp-label {
-            background-color: #e5bb20; /* Orange */
-        }
-
-        /* LP rolling out on hover */
-        .album-item:hover .lp {
-            transform: translateY(-50%) translateX(-50%); /* Roll out to halfway the box on the left side */
-        }
-
-        .album-title {
+        .story {
             margin-top: 10px;
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--color-text);
-        }
-
-        .album-subtext {
             font-size: 14px;
-            color: var(--color-accent);
         }
 
-        .audio-controls {
-            display: none;
-        }
-
-        .album-item:hover .audio-controls {
-            display: block;
-        }
-
-        /* Play indicator */
-        .playing-indicator {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            width: 10px;
-            height: 10px;
-            background-color: var(--color-accent);
+        /* Floating Balls */
+        .ball {
+            position: fixed;
+            bottom: 0;
+            width: 30px;
+            height: 30px;
             border-radius: 50%;
-            display: none;
+            opacity: 0.7;
+            animation: float 5s infinite ease-in-out;
+            pointer-events: none;
+            z-index: 900;
         }
 
-        .album-item.playing .playing-indicator {
-            display: block;
+        .ball.red {
+            background-color: red;
+        }
+
+        .ball.green {
+            background-color: green;
+        }
+
+        .ball.blue {
+            background-color: blue;
+        }
+
+        .ball.yellow {
+            background-color: yellow;
+        }
+
+        .ball.purple {
+            background-color: purple;
+        }
+
+        .ball.orange {
+            background-color: orange;
+        }
+
+        .ball.pink {
+            background-color: pink;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateY(-10vh); /* Rise up to 10% of the viewport height */
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 0.7;
+            }
         }
 
         @media (max-width: 600px) {
             .gallery {
                 grid-template-columns: 1fr;
+            }
+
+            .gallery-item {
+                height: 150px; /* Adjust height for smaller screens */
             }
         }
     </style>
@@ -177,6 +197,18 @@
 
 <header>
     <div class="menu-icon" onclick="toggleMenu()">☰</div>
+    <div class="present-container">
+        <a href="Index.html">
+            <img src="https://cdn.pixabay.com/photo/2016/12/12/23/06/grey-1902876_960_720.png" alt="Present Icon" class="present-icon">
+        </a>
+    </div>
+    <nav class="navbar" id="navbar">
+        <a href="index.html">Home</a>
+        <a href="Spel1.html">Spel 1</a>
+        <a href="Spel2.html">Spel 2</a>
+        <a href="HappyBirthday.html">Filmpje</a> 
+        <a href="Music.html">Muziek hal</a>
+    </nav>
 </header>
 
 <div class="container">
