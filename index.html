@@ -93,15 +93,16 @@
 
         .gallery-item {
             background-color: var(--color-card);
-            padding: 10px;
             border-radius: 8px;
             overflow: hidden;
             transition: transform 0.3s ease;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            height: 250px; /* Fixed height for gallery items */
+            /* Rectangular aspect ratio: width 3 times height (3:2 ratio) */
+            width: 100%;
+            height: 200px; /* Fixed height for gallery items */
             display: flex;
-            flex-direction: column;
-            justify-content: center; /* Center image vertically */
+            align-items: center;
+            justify-content: center;
         }
 
         .gallery-item img {
@@ -184,6 +185,10 @@
         @media (max-width: 600px) {
             .gallery {
                 grid-template-columns: 1fr;
+            }
+
+            .gallery-item {
+                height: 150px; /* Adjust height for smaller screens */
             }
         }
     </style>
