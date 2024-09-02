@@ -268,11 +268,11 @@
         const color = colors[Math.floor(Math.random() * colors.length)];
 
         ball.classList.add('ball', color);
-        ball.style.width = ${size}px;
-        ball.style.height = ${size}px;
-        ball.style.left = ${leftPosition}px;
-        ball.style.animationDelay = ${delay}s;
-        ball.style.animationDuration = ${speed}s;
+        ball.style.width = `${size}px`;
+        ball.style.height = `${size}px`;
+        ball.style.left = `${leftPosition}px`;
+        ball.style.animationDelay = `${delay}s`;
+        ball.style.animationDuration = `${speed}s`;
 
         document.body.appendChild(ball);
 
@@ -288,7 +288,11 @@
 
     function toggleMenu() {
         const navbar = document.getElementById('navbar');
-        navbar.style.display = navbar.style.display === 'flex' ? 'none' : 'flex';
+        if (navbar.style.display === 'flex' || navbar.style.display === '') {
+            navbar.style.display = 'none';
+        } else {
+            navbar.style.display = 'flex';
+        }
     }
 
     generateBalls();
