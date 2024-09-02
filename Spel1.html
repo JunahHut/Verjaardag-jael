@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Birthday Tic-Tac-Toe!</title>
     <style>
+        /* Your existing CSS */
         :root {
             --color-bg: #f6e8d6;
             --color-bg-alt: #ecdcc7;
@@ -141,6 +142,8 @@
             background-color: #e65e56;
         }
     </style>
+    <!-- Include canvas-confetti library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
 </head>
 <body>
 
@@ -235,7 +238,7 @@
         cell.textContent = currentPlayer;
 
         if (checkWin(currentPlayer)) {
-            document.getElementById('message').textContent = currentPlayer === HUMAN ? 'Je heb gewonnen!! Nu mag je een cadeau' : 'De computer wint, pfoe';
+            document.getElementById('message').textContent = currentPlayer === HUMAN ? 'Je hebt gewonnen!! Nu mag je een cadeau' : 'De computer wint, pfoe';
             document.getElementById('revealButton').style.display = 'block';
             document.getElementById('retryButton').style.display = 'block';
             gameActive = false;
@@ -316,9 +319,26 @@
         makeMove(cell, index);
     }
 
-    // Reveal the present
+    // Reveal the present with confetti
     function revealPresent() {
-        window.location.href = 'present.html'; // Redirect to the present page
+        // Show confetti for 10 seconds
+        const end = Date.now() + 10000;
+        const interval = 200;
+        function shootConfetti() {
+            if (Date.now() > end) return;
+            confetti({
+                particleCount: 50,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+            setTimeout(shootConfetti, interval);
+        }
+        shootConfetti();
+
+        // Redirect after 10 seconds
+        setTimeout(() => {
+            window.location.href = 'present.html';
+        }, 10000);
     }
 
     // Toggle the navigation menu
