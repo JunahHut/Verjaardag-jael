@@ -177,8 +177,8 @@
     </div>
     <div class="message" id="message"></div>
     <div class="button-container">
-        <button class="reveal-button" id="revealButton" onclick="revealPresent()">Open Present</button>
-        <button class="retry-button" id="retryButton" onclick="retryGame()">Retry</button>
+        <button class="reveal-button" id="revealButton" onclick="revealPresent()">Open een cadeautje</button>
+        <button class="retry-button" id="retryButton" onclick="retryGame()">Opnieuw</button>
     </div>
 </div>
 
@@ -235,13 +235,13 @@
         cell.textContent = currentPlayer;
 
         if (checkWin(currentPlayer)) {
-            document.getElementById('message').textContent = currentPlayer === HUMAN ? 'You win! Open the present!' : 'Computer wins!';
+            document.getElementById('message').textContent = currentPlayer === HUMAN ? 'Je heb gewonnen!! Nu mag je een cadeau' : 'De computer wint, pfoe';
             document.getElementById('revealButton').style.display = 'block';
             document.getElementById('retryButton').style.display = 'block';
             gameActive = false;
             return;
         } else if (checkDraw()) {
-            document.getElementById('message').textContent = "It's a draw!";
+            document.getElementById('message').textContent = "Gelijkspel";
             document.getElementById('retryButton').style.display = 'block';
             gameActive = false;
             return;
@@ -299,11 +299,11 @@
         cell.textContent = COMPUTER;
 
         if (checkWin(COMPUTER)) {
-            document.getElementById('message').textContent = 'Computer wins!';
+            document.getElementById('message').textContent = 'De computer wint, pfoe';
             document.getElementById('retryButton').style.display = 'block';
             gameActive = false;
         } else if (checkDraw()) {
-            document.getElementById('message').textContent = "It's a draw!";
+            document.getElementById('message').textContent = "Gelijkspel";
             document.getElementById('retryButton').style.display = 'block';
             gameActive = false;
         } else {
