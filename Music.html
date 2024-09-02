@@ -45,6 +45,41 @@
             color: var(--color-text);
         }
 
+        .present-container {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .present-icon {
+            width: 40px;
+            cursor: pointer;
+        }
+
+        .navbar {
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 10px;
+            background-color: var(--color-bg-alt);
+            position: absolute;
+            top: 50px; /* Positions the menu below the header */
+            left: 10px; /* Aligns the menu to the right side of the screen */
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: var(--color-text);
+            padding: 8px 0;
+            transition: color 0.3s;
+        }
+
+        .navbar a:hover {
+            color: var(--color-card-hover);
+        }
+
         .container {
             padding: 80px 20px 20px;
             max-width: 1000px;
@@ -166,7 +201,7 @@
             <img src="https://cdn.pixabay.com/photo/2016/12/12/23/06/grey-1902876_960_720.png" alt="Present Icon" class="present-icon">
         </a>
     </div>
-    <nav class="navbar" id="navbar">
+  <nav class="navbar" id="navbar">
         <a href="index.html">Home</a>
         <a href="Spel1.html">Spel 1</a> <!-- Link to the Game page -->
         <a href="Spel2.html">Spel 2</a>
