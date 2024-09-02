@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Birthday Tic-Tac-Toe!</title>
+    <style>
+        :root {
+            --color-bg: #f6e8d6;
+            --color-bg-alt: #ecdcc7;
+            --color-card: #cec0af;
+            --color-card-hover: #aba192;
+            --color-text: #90877c;
+            --color-accent: #ff6f61;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: var(--color-bg-alt);
+            padding: 10px;
+            width: 100%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+            color: var(--color-text);
+        }
+
+        .present-container {
+            display: flex;
+            justify-content: center;
+            flex-grow: 1;
+        }
+
+        .present-icon {
+            width: 40px;
+        }
+
+        .navbar {
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 10px;
+            background-color: var(--color-bg-alt);
+            position: absolute;
+            top: 50px;
+            left: 10px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: var(--color-text);
+            padding: 8px 0;
+            width: 100%;
+            text-align: left;
+        }
+
+        .navbar a:hover {
+            color: var(--color-card-hover);
+        }
+
+        .container {
+            padding: 100px 20px 20px;
+            max-width: 600px;
+            margin: auto;
+            text-align: center;
+        }
+
+        h2 {
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+
+        .board {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 10px;
+            margin: auto;
+        }
+
+        .cell {
+            width: 100px;
+            height: 100px;
+            background-color: var(--color-card);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            cursor: pointer;
+            border-radius: 10px;
+            transition: background-color 0.3s;
+        }
+
+        .cell:hover {
+            background-color: var(--color-card-hover);
+        }
+
+        .message {
+            margin-top: 20px;
+            font-size: 20px;
+            color: var(--color-accent);
+        }
+
+        .button-container {
+            margin-top: 20px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+        }
+
+        .reveal-button, .retry-button {
+            display: none;
+            padding: 10px 20px;
+            font-size: 18px;
+            color: white;
+            background-color: var(--color-accent);
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .reveal-button:hover, .retry-button:hover {
+            background-color: #e65e56;
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+    <div class="present-container">
+        <a href="index.html">
+            <img src="https://cdn.pixabay.com/photo/2016/12/12/23/06/grey-1902876_960_720.png" alt="Present Icon" class="present-icon">
+        </a>
+    </div>
+    <nav class="navbar" id="navbar">
+        <a href="#section1">Happy Birthday</a>
+        <a href="game.html">Game</a>
+        <a href="Present.html">Present</a>
+    </nav>
+</header>
+
+<div class="container">
+    <h2>Play Tic-Tac-Toe to Open Your Present!</h2>
+    <div class="board" id="board">
+        <!-- Tic-Tac-Toe cells -->
+        <div class="cell" data-index="0"></div>
+        <div class="cell" data-index="1"></div>
+        <div class="cell" data-index="2"></div>
+        <div class="cell" data-index="3"></div>
+        <div class="cell" data-index="4"></div>
+        <div class="cell" data-index="5"></div>
+        <div class="cell" data-index="6"></div>
+        <div class="cell" data-index="7"></div>
+        <div class="cell" data-index="8"></div>
+    </div>
+    <div class="message" id="message"></div>
+    <div class="button-container">
+        <button class="reveal-button" id="revealButton" onclick="revealPresent()">Open Present</button>
+        <button class="retry-button" id="retryButton" onclick="retryGame()">Retry</button>
+    </div>
+</div>
+
+<script>
+    // Define constants for the game
+    const COMPUTER = 'O';
+    const HUMAN = 'X';
+    const SIDE = 3; // Board is 3x3
+
+    // Game board and player turn
+    let board = Array(SIDE * SIDE).fill('');
+    let currentPlayer = HUMAN;
+    let gameActive = true;
+
+    // Define winning conditions
+    const winningConditions = [
+        [0, 1, 2],
+        [3, 4, 5],
+        [6, 7, 8],
+        [0, 3, 6],
+        [1, 4, 7],
+        [2, 5, 8],
+        [0, 4, 8],
+        [2, 4, 6]
+    ];
+
+    // Show the current board status in console
+    function showBoard() {
+        for (let i = 0; i < SIDE; i++) {
+            console.log(`  ${board[i * SIDE]} | ${board[i * SIDE + 1]} | ${board[i * SIDE + 2]}`);
+            if (i < SIDE - 1) {
+                console.log('  -----------');
+            }
+        }
+    }
+
+    // Check if the board has a winning condition
+    function checkWin(player) {
+        return winningConditions.some(([a, b, c]) => board[a] === player && board[b] === player && board[c] === player);
+    }
+
+    // Check if the game is a draw
+    function checkDraw() {
+        return board.every(cell => cell !== '');
+    }
+
+    // Make a move
+    function makeMove(cell, index) {
+        if (board[index] !== '' || !gameActive) {
+            return;
+        }
+
+        board[index] = currentPlayer;
+        cell.textContent = currentPlayer;
+
+        if (checkWin(currentPlayer)) {
+            document.getElementById('message').textContent = currentPlayer === HUMAN ? 'You win! Open the present!' : 'Computer wins!';
+            document.getElementById('revealButton').style.display = 'block';
+            document.getElementById('retryButton').style.display = 'block';
+            gameActive = false;
+            return;
+        } else if (checkDraw()) {
+            document.getElementById('message').textContent = "It's a draw!";
+            document.getElementById('retryButton').style.display = 'block';
+            gameActive = false;
+            return;
+        }
+
+        currentPlayer = COMPUTER;
+        computerMove();
+    }
+
+    // Computer's move
+    function computerMove() {
+        // Try to block the player's winning move
+        for (let i = 0; i < winningConditions.length; i++) {
+            const [a, b, c] = winningConditions[i];
+            if (board[a] === HUMAN && board[b] === HUMAN && board[c] === '') {
+                makeComputerMove(c);
+                return;
+            } else if (board[a] === HUMAN && board[c] === HUMAN && board[b] === '') {
+                makeComputerMove(b);
+                return;
+            } else if (board[b] === HUMAN && board[c] === HUMAN && board[a] === '') {
+                makeComputerMove(a);
+                return;
+            }
+        }
+
+        // Try to win
+        for (let i = 0; i < winningConditions.length; i++) {
+            const [a, b, c] = winningConditions[i];
+            if (board[a] === COMPUTER && board[b] === COMPUTER && board[c] === '') {
+                makeComputerMove(c);
+                return;
+            } else if (board[a] === COMPUTER && board[c] === COMPUTER && board[b] === '') {
+                makeComputerMove(b);
+                return;
+            } else if (board[b] === COMPUTER && board[c] === COMPUTER && board[a] === '') {
+                makeComputerMove(a);
+                return;
+            }
+        }
+
+        // If no critical move is found, pick a random available cell
+        const availableCells = board.map((cell, index) => (cell === '' ? index : null)).filter(index => index !== null);
+        if (availableCells.length === 0) return;
+
+        const randomIndex = Math.floor(Math.random() * availableCells.length);
+        makeComputerMove(availableCells[randomIndex]);
+    }
+
+    // Make the computer move at a specific index
+    function makeComputerMove(index) {
+        const cell = document.getElementsByClassName('cell')[index];
+
+        board[index] = COMPUTER;
+        cell.textContent = COMPUTER;
+
+        if (checkWin(COMPUTER)) {
+            document.getElementById('message').textContent = 'Computer wins!';
+            document.getElementById('retryButton').style.display = 'block';
+            gameActive = false;
+        } else if (checkDraw()) {
+            document.getElementById('message').textContent = "It's a draw!";
+            document.getElementById('retryButton').style.display = 'block';
+            gameActive = false;
+        } else {
+            currentPlayer = HUMAN;
+        }
+    }
+
+    // Handle player's move
+    function handlePlayerMove(cell, index) {
+        makeMove(cell, index);
+    }
+
+    // Reveal the present
+    function revealPresent() {
+        window.location.href = 'present.html'; // Redirect to the present page
+    }
+
+    // Toggle the navigation menu
+    function toggleMenu() {
+        const navbar = document.getElementById('navbar');
+        navbar.style.display = navbar.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    // Retry the game
+    function retryGame() {
+        board.fill('');
+        gameActive = true;
+        currentPlayer = HUMAN;
+
+        // Clear the board UI
+        document.querySelectorAll('.cell').forEach(cell => {
+            cell.textContent = '';
+        });
+
+        // Reset message and hide buttons
+        document.getElementById('message').textContent = '';
+        document.getElementById('revealButton').style.display = 'none';
+        document.getElementById('retryButton').style.display = 'none';
+    }
+
+    // Event listeners for the cells
+    document.querySelectorAll('.cell').forEach((cell, index) => {
+        cell.addEventListener('click', () => handlePlayerMove(cell, index));
+    });
+</script>
+
+</body>
+</html>

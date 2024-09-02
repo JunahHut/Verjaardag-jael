@@ -1,0 +1,274 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Library</title>
+    <style>
+        /* Colors */
+        :root {
+            --color-bg: #f6e8d6;
+            --color-bg-alt: #ecdcc7;
+            --color-card: #cec0af;
+            --color-card-hover: #aba192;
+            --color-text: #90877c;
+            --color-accent: #ff6f61;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: var(--color-bg-alt);
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+            display: inline-block;
+            color: var(--color-text);
+        }
+
+        .container {
+            padding: 80px 20px 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+        }
+
+        .album-item {
+            background-color: var(--color-card);
+            padding: 10px;
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            cursor: pointer;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            text-align: center;
+        }
+
+        .album-item img {
+            width: 100%;
+            border-radius: 8px;
+        }
+
+        /* LP Disc */
+        .lp {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            width: 110%;
+            height: 100%;
+            border-radius: 50%;
+            background: radial-gradient(circle, #000 70%, #333 100%);
+            transform: translateY(-50%) translateX(-110%); /* Start position off-screen */
+            transition: transform 0.6s ease;
+            z-index: 10;
+            overflow: hidden;
+        }
+
+        /* LP Label (center of the disc) */
+        .lp-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 35%;
+            height: 35%;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        /* Different colors for each LP */
+        .album-item[data-color="red"] .lp-label {
+            background-color: #f0921a; /* Red */
+        }
+
+        .album-item[data-color="blue"] .lp-label {
+            background-color: #4a931b; /* Blue */
+        }
+
+        .album-item[data-color="green"] .lp-label {
+            background-color: #982213; /* Green */
+        }
+
+        .album-item[data-color="yellow"] .lp-label {
+            background-color: #9c9695; /* Yellow */
+        }
+
+        .album-item[data-color="purple"] .lp-label {
+            background-color: #2686d1; /* Purple */
+        }
+
+        .album-item[data-color="orange"] .lp-label {
+            background-color: #e5bb20; /* Orange */
+        }
+
+        /* LP rolling out on hover */
+        .album-item:hover .lp {
+            transform: translateY(-50%) translateX(-50%); /* Roll out to halfway the box on the left side */
+        }
+
+        .album-title {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--color-text);
+        }
+
+        .album-subtext {
+            font-size: 14px;
+            color: var(--color-accent);
+        }
+
+        .audio-controls {
+            display: none;
+        }
+
+        .album-item:hover .audio-controls {
+            display: block;
+        }
+
+        @media (max-width: 600px) {
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+</header>
+
+<div class="container">
+    <div class="gallery">
+        <div class="album-item" data-color="red" onclick="playSong('song1.mp3')">
+            <img src="https://cdns-images.dzcdn.net/images/cover/9ae54e805338b9fdfc77a36ebed7850e/1900x1900-000000-80-0-0.jpg" alt="Album 1">
+            <div class="lp">
+                <div class="lp-label"></div>
+            </div>
+            <div class="album-title">Album 1 Title</div>
+            <div class="album-subtext">Artist Name 1</div>
+            <div class="audio-controls">
+                <audio id="song1">
+                    <source src="song1.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+        </div>
+        <div class="album-item" data-color="blue" onclick="playSong('song2.mp3')">
+            <img src="https://excelsior-recordings.com/cdn/shop/files/FACD01-CDartwork_fe34d2c7-7330-4668-83dc-cb67ff2fba5f_1024x1024@2x.jpg?v=1707320734" alt="Album 2">
+            <div class="lp">
+                <div class="lp-label"></div>
+            </div>
+            <div class="album-title">Album 2 Title</div>
+            <div class="album-subtext">Artist Name 2</div>
+            <div class="audio-controls">
+                <audio id="song2">
+                    <source src="song2.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+        </div>
+        <div class="album-item" data-color="green" onclick="playSong('song3.mp3')">
+            <img src="https://upload.wikimedia.org/wikipedia/en/a/a4/LadyLady.jpg" alt="Album 3">
+            <div class="lp">
+                <div class="lp-label"></div>
+            </div>
+            <div class="album-title">Album 3 Title</div>
+            <div class="album-subtext">Artist Name 3</div>
+            <div class="audio-controls">
+                <audio id="song3">
+                    <source src="song3.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+        </div>
+        <div class="album-item" data-color="yellow" onclick="playSong('song4.mp3')">
+            <img src="https://i.scdn.co/image/ab67616d0000b27378bb3f99f7507fba531bbf99" alt="Album 4">
+            <div class="lp">
+                <div class="lp-label"></div>
+            </div>
+            <div class="album-title">Album 4 Title</div>
+            <div class="album-subtext">Artist Name 4</div>
+            <div class="audio-controls">
+                <audio id="song4">
+                    <source src="song4.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+        </div>
+        <div class="album-item" data-color="purple" onclick="playSong('song5.mp3')">
+            <img src="https://i.scdn.co/image/ab67616d0000b2735e1ec3f6b114e4e4924f006f" alt="Album 5">
+            <div class="lp">
+                <div class="lp-label"></div>
+            </div>
+            <div class="album-title">Album 5 Title</div>
+            <div class="album-subtext">Artist Name 5</div>
+            <div class="audio-controls">
+                <audio id="song5">
+                    <source src="song5.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+        </div>
+        <div class="album-item" data-color="orange" onclick="playSong('song6.mp3')">
+            <img src="https://upload.wikimedia.org/wikipedia/en/5/56/1999_Joey_Badass.jpg" alt="Album 6">
+            <div class="lp">
+                <div class="lp-label"></div>
+            </div>
+            <div class="album-title">Album 6 Title</div>
+            <div class="album-subtext">Artist Name 6</div>
+            <div class="audio-controls">
+                <audio id="song6">
+                    <source src="song6.mp3" type="audio/mpeg">
+                    Your browser does not support the audio element.
+                </audio>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    function playSong(songId) {
+        const allAudio = document.querySelectorAll('audio');
+        allAudio.forEach(audio => {
+            audio.pause();
+            audio.currentTime = 0;
+        });
+
+        const song = document.getElementById(songId.replace('.mp3', ''));
+        song.play();
+    }
+
+    function toggleMenu() {
+        const navbar = document.getElementById('navbar');
+        navbar.style.display = navbar.style.display === 'flex' ? 'none' : 'flex';
+    }
+</script>
+
+</body>
+</html>

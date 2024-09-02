@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy 18th Birthday!</title>
+    <style>
+        /* Colors */
+        :root {
+            --color-bg: #f6e8d6;
+            --color-bg-alt: #ecdcc7;
+            --color-card: #cec0af;
+            --color-card-hover: #aba192;
+            --color-text: #90877c;
+            --color-accent: #ff6f61;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: var(--color-bg);
+            color: var(--color-text);
+            overflow-x: hidden;
+        }
+
+        header {
+            background-color: var(--color-bg-alt);
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 10px;
+        }
+
+        .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+            display: inline-block;
+            color: var(--color-text);
+        }
+
+        .present-container {
+            position: absolute;
+            left: 50%;
+            transform: translateX(-50%);
+        }
+
+        .present-icon {
+            width: 40px;
+            cursor: pointer;
+        }
+
+        .navbar {
+            display: none;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 10px;
+            background-color: var(--color-bg-alt);
+            position: absolute;
+            top: 50px; /* Positions the menu below the header */
+            left: 10px; /* Aligns the menu to the right side of the screen */
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: var(--color-text);
+            padding: 8px 0;
+            transition: color 0.3s;
+        }
+
+        .navbar a:hover {
+            color: var(--color-card-hover);
+        }
+
+        .container {
+            padding: 80px 20px 20px;
+            max-width: 1000px;
+            margin: auto;
+        }
+
+        .gallery {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        .gallery-item {
+            background-color: var(--color-card);
+            padding: 10px;
+            border-radius: 8px;
+            overflow: hidden;
+            transition: transform 0.3s ease;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        .gallery-item:hover {
+            transform: scale(1.05);
+        }
+
+        .gallery-item img {
+            width: 100%;
+            border-radius: 8px;
+            transition: transform 0.3s ease;
+        }
+
+        .gallery-item:hover img {
+            transform: scale(1.1);
+        }
+
+        .gallery-item .story {
+            margin-top: 10px;
+            font-size: 14px;
+        }
+
+        /* Floating Balls */
+        .ball {
+            position: fixed;
+            bottom: 0;
+            width: 30px;
+            height: 30px;
+            border-radius: 50%;
+            opacity: 0.7;
+            animation: float 5s infinite ease-in-out;
+            pointer-events: none;
+            z-index: 900;
+        }
+
+        .ball.red {
+            background-color: red;
+        }
+
+        .ball.green {
+            background-color: green;
+        }
+
+        .ball.blue {
+            background-color: blue;
+        }
+
+        .ball.yellow {
+            background-color: yellow;
+        }
+
+        .ball.purple {
+            background-color: purple;
+        }
+
+        .ball.orange {
+            background-color: orange;
+        }
+
+        .ball.pink {
+            background-color: pink;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(0);
+                opacity: 0.7;
+            }
+            50% {
+                transform: translateY(-10vh); /* Rise up to 10% of the viewport height */
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(0);
+                opacity: 0.7;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .gallery {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Ensure the h2 is visible */
+        h2 {
+            margin-top: 80px; /* Adjust this value as needed */
+            text-align: center; /* Center the text for better visibility */
+        }
+    </style>
+</head>
+<body>
+
+<header>
+    <div class="menu-icon" onclick="toggleMenu()">☰</div>
+    <div class="present-container">
+        <a href="Index.html">
+            <img src="https://cdn.pixabay.com/photo/2016/12/12/23/06/grey-1902876_960_720.png" alt="Present Icon" class="present-icon">
+        </a>
+    </div>
+    <nav class="navbar" id="navbar">
+        <a href="#section1">Happy Birthday</a>
+        <a href="game.html">Game</a> <!-- Link to the Game page -->
+        <a href="present.html">Present</a> <!-- Link to the Present page -->
+    </nav>
+</header>
+<br><br><br><br><br><br><br><br><br>
+<center><iframe width="560" height="315" src="https://www.youtube.com/embed/gS5zRfNZR8A?si=z0nq1cQGEqFw9FqI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></center>
+
+<!-- Script for Floating Balls -->
+<script>
+    function createBall() {
+        const ball = document.createElement('div');
+        const size = Math.random() * 30 + 20;
+        const leftPosition = Math.random() * window.innerWidth;
+        const delay = Math.random() * 5; // Shorter delay to make them more frequent
+        const speed = Math.random() * 5 + 5; // Shorter duration to keep them floating within the bottom 25%
+
+        const colors = ['red', 'green', 'blue', 'yellow', 'purple', 'orange', 'pink'];
+        const color = colors[Math.floor(Math.random() * colors.length)];
+
+        ball.classList.add('ball', color);
+        ball.style.width = `${size}px`;
+        ball.style.height = `${size}px`;
+        ball.style.left = `${leftPosition}px`;
+        ball.style.animationDelay = `${delay}s`;
+        ball.style.animationDuration = `${speed}s`;
+
+        document.body.appendChild(ball);
+
+        // Automatically remove the ball after its animation ends
+        setTimeout(() => {
+            ball.remove();
+        }, (speed + delay) * 1000);
+    }
+
+    function generateBalls() {
+        setInterval(createBall, 500);
+    }
+
+    function toggleMenu() {
+        const navbar = document.getElementById('navbar');
+        navbar.style.display = navbar.style.display === 'flex' ? 'none' : 'flex';
+    }
+
+    generateBalls();
+</script>
+
+</body>
+</html>
