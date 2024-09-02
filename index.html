@@ -97,28 +97,20 @@
             overflow: hidden;
             transition: transform 0.3s ease;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            /* Rectangular aspect ratio: width 3 times height (3:2 ratio) */
             width: 100%;
-            height: 300px; /* Fixed height for portrait mode */
+            height: 200px; /* Fixed height for gallery items */
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
         }
 
         .gallery-item img {
-            width: 100%;
-            height: 70%; /* Adjust height to fit the portrait aspect ratio */
+            width: 160px;
+            height: 200px;
             object-fit: cover; /* Ensure image covers the container */
-            border-radius: 8px 8px 0 0; /* Rounded corners for the top only */
-        }
-
-        .story {
-            padding: 10px; /* Add space around the text */
-            font-size: 14px;
-            text-align: center; /* Center-align the text */
-            background-color: var(--color-card); /* Match background color of text area */
-            width: 100%;
-            border-radius: 0 0 8px 8px; /* Rounded corners for the bottom only */
+            border-radius: 8px;
+            transition: transform 0.3s ease;
         }
 
         .gallery-item:hover {
@@ -127,6 +119,11 @@
 
         .gallery-item:hover img {
             transform: scale(1.1);
+        }
+
+        .story {
+            margin-top: 10px;
+            font-size: 14px;
         }
 
         /* Floating Balls */
@@ -191,7 +188,7 @@
             }
 
             .gallery-item {
-                height: 200px; /* Adjust height for smaller screens */
+                height: 150px; /* Adjust height for smaller screens */
             }
         }
     </style>
@@ -217,7 +214,7 @@
 
 <div class="container">
     <section id="section1">
-        <center><h2>Gefeliciteerd met je verjaardag poekiee!!</h2></center>
+       <center><h2>Gefeliciteerd met je verjaardag poekiee!!</h2></center> 
         <div class="gallery">
             <div class="gallery-item">
                 <img src="https://pbs.twimg.com/media/GWfOzXbXIAAh5aW?format=jpg&name=large" alt="Image 1">
@@ -229,7 +226,7 @@
             </div>
         </div>
     </section>
-    <section id="section2">
+    <section id="section1">
         <h2></h2>
         <div class="gallery">
             <div class="gallery-item">
@@ -242,7 +239,7 @@
             </div>
         </div>
     </section>
-    <section id="section3">
+    <section id="section1">
         <h2></h2>
         <div class="gallery">
             <div class="gallery-item">
@@ -257,6 +254,7 @@
     </section>
 </div>
 
+
 <!-- Script for Floating Balls -->
 <script>
     function createBall() {
@@ -270,11 +268,11 @@
         const color = colors[Math.floor(Math.random() * colors.length)];
 
         ball.classList.add('ball', color);
-        ball.style.width = `${size}px`;
-        ball.style.height = `${size}px`;
-        ball.style.left = `${leftPosition}px`;
-        ball.style.animationDelay = `${delay}s`;
-        ball.style.animationDuration = `${speed}s`;
+        ball.style.width = ${size}px;
+        ball.style.height = ${size}px;
+        ball.style.left = ${leftPosition}px;
+        ball.style.animationDelay = ${delay}s;
+        ball.style.animationDuration = ${speed}s;
 
         document.body.appendChild(ball);
 
