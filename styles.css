@@ -1,0 +1,108 @@
+/* Colors */
+:root {
+    --color-bg: #f6e8d6;
+    --color-bg-alt: #ecdcc7;
+    --color-card: #cec0af;
+    --color-card-hover: #aba192;
+    --color-text: #90877c;
+    --color-accent: #ff6f61;
+}
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+    background-color: var(--color-bg);
+    color: var(--color-text);
+    overflow-x: hidden;
+}
+
+header {
+    background-color: var(--color-bg-alt);
+    padding: 10px;
+    position: fixed;
+    width: 100%;
+    top: 0;
+    left: 0;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.menu-icon {
+    font-size: 24px;
+    cursor: pointer;
+    display: inline-block;
+    color: var(--color-text);
+}
+
+.present-container {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.present-icon {
+    width: 40px;
+    cursor: pointer;
+}
+
+.navbar {
+    display: none;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+    background-color: var(--color-bg-alt);
+    position: absolute;
+    top: 50px; /* Positions the menu below the header */
+    left: 10px; /* Aligns the menu to the right side of the screen */
+    border-radius: 5px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.navbar a {
+    text-decoration: none;
+    color: var(--color-text);
+    padding: 8px 0;
+    transition: color 0.3s;
+}
+
+.navbar a:hover {
+    color: var(--color-card-hover);
+}
+
+.container {
+    padding: 80px 20px 20px;
+    max-width: 1000px;
+    margin: auto;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.gallery-item {
+    background-color: var(--color-card);
+    padding: 10px;
+    border-radius: 8px;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.gallery-item:hover {
+    transform: scale(1.05);
+}
+
+.gallery-item img {
+    width: 100%;
+    border-radius: 8px;
+    transition: transform 0.3s ease;
+}
+
+.gallery-item:hover img {
+    transform: scale(1.
