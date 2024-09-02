@@ -97,20 +97,28 @@
             overflow: hidden;
             transition: transform 0.3s ease;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            /* Rectangular aspect ratio: width 3 times height (3:2 ratio) */
             width: 100%;
-            height: 200px; /* Fixed height for gallery items */
+            height: 300px; /* Fixed height for portrait mode */
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
         }
 
         .gallery-item img {
             width: 100%;
-            height: 100%;
+            height: 70%; /* Adjust height to fit the portrait aspect ratio */
             object-fit: cover; /* Ensure image covers the container */
-            border-radius: 8px;
-            transition: transform 0.3s ease;
+            border-radius: 8px 8px 0 0; /* Rounded corners for the top only */
+        }
+
+        .story {
+            padding: 10px; /* Add space around the text */
+            font-size: 14px;
+            text-align: center; /* Center-align the text */
+            background-color: var(--color-card); /* Match background color of text area */
+            width: 100%;
+            border-radius: 0 0 8px 8px; /* Rounded corners for the bottom only */
         }
 
         .gallery-item:hover {
@@ -119,11 +127,6 @@
 
         .gallery-item:hover img {
             transform: scale(1.1);
-        }
-
-        .story {
-            margin-top: 10px;
-            font-size: 14px;
         }
 
         /* Floating Balls */
@@ -188,7 +191,7 @@
             }
 
             .gallery-item {
-                height: 150px; /* Adjust height for smaller screens */
+                height: 200px; /* Adjust height for smaller screens */
             }
         }
     </style>
@@ -214,7 +217,7 @@
 
 <div class="container">
     <section id="section1">
-       <center><h2>Gefeliciteerd met je verjaardag poekiee!!</h2></center> 
+        <center><h2>Gefeliciteerd met je verjaardag poekiee!!</h2></center>
         <div class="gallery">
             <div class="gallery-item">
                 <img src="https://pbs.twimg.com/media/GWfOzXbXIAAh5aW?format=jpg&name=large" alt="Image 1">
@@ -226,7 +229,7 @@
             </div>
         </div>
     </section>
-    <section id="section1">
+    <section id="section2">
         <h2></h2>
         <div class="gallery">
             <div class="gallery-item">
@@ -239,7 +242,7 @@
             </div>
         </div>
     </section>
-    <section id="section1">
+    <section id="section3">
         <h2></h2>
         <div class="gallery">
             <div class="gallery-item">
@@ -253,7 +256,6 @@
         </div>
     </section>
 </div>
-
 
 <!-- Script for Floating Balls -->
 <script>
