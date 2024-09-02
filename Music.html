@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Library</title>
     <style>
         /* Colors */
         :root {
@@ -36,25 +37,16 @@
             justify-content: space-between;
             gap: 10px;
         }
-
-        .menu-icon {
-            font-size: 24px;
-            cursor: pointer;
-            display: inline-block;
-            color: var(--color-text);
-        }
-
-        .present-container {
+  .present-container {
             position: absolute;
             left: 50%;
             transform: translateX(-50%);
         }
 
-        .present-icon {
+         .present-icon {
             width: 40px;
             cursor: pointer;
         }
-
         .navbar {
             display: none;
             flex-direction: column;
@@ -79,6 +71,13 @@
             color: var(--color-card-hover);
         }
 
+        .menu-icon {
+            font-size: 24px;
+            cursor: pointer;
+            display: inline-block;
+            color: var(--color-text);
+        }
+
         .container {
             padding: 80px 20px 20px;
             max-width: 1000px;
@@ -87,108 +86,122 @@
 
         .gallery {
             display: grid;
-            grid-template-columns: repeat(2, 1fr);
+            grid-template-columns: repeat(3, 1fr);
             gap: 20px;
         }
 
-        .gallery-item {
+        .album-item {
             background-color: var(--color-card);
+            padding: 10px;
             border-radius: 8px;
             overflow: hidden;
+            position: relative;
+            cursor: pointer;
             transition: transform 0.3s ease;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            /* Rectangular aspect ratio: width 3 times height (3:2 ratio) */
-            width: 100%;
-            height: 200px; /* Fixed height for gallery items */
-            display: flex;
-            align-items: center;
-            justify-content: center;
+            text-align: center;
         }
 
-        .gallery-item img {
+        .album-item img {
             width: 100%;
-            height: 100%;
-            object-fit: cover; /* Ensure image covers the container */
             border-radius: 8px;
-            transition: transform 0.3s ease;
         }
 
-        .gallery-item:hover {
-            transform: scale(1.05);
-        }
-
-        .gallery-item:hover img {
-            transform: scale(1.1);
-        }
-
-        .story {
-            margin-top: 10px;
-            font-size: 14px;
-        }
-
-        /* Floating Balls */
-        .ball {
-            position: fixed;
-            bottom: 0;
-            width: 30px;
-            height: 30px;
+        /* LP Disc */
+        .lp {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            width: 110%;
+            height: 100%;
             border-radius: 50%;
-            opacity: 0.7;
-            animation: float 5s infinite ease-in-out;
-            pointer-events: none;
-            z-index: 900;
+            background: radial-gradient(circle, #000 70%, #333 100%);
+            transform: translateY(-50%) translateX(-110%); /* Start position off-screen */
+            transition: transform 0.6s ease;
+            z-index: 10;
+            overflow: hidden;
         }
 
-        .ball.red {
-            background-color: red;
+        /* LP Label (center of the disc) */
+        .lp-label {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            width: 35%;
+            height: 35%;
+            border-radius: 50%;
+            transform: translate(-50%, -50%);
         }
 
-        .ball.green {
-            background-color: green;
+        /* Different colors for each LP */
+        .album-item[data-color="red"] .lp-label {
+            background-color: #f0921a; /* Red */
         }
 
-        .ball.blue {
-            background-color: blue;
+        .album-item[data-color="blue"] .lp-label {
+            background-color: #4a931b; /* Blue */
         }
 
-        .ball.yellow {
-            background-color: yellow;
+        .album-item[data-color="green"] .lp-label {
+            background-color: #982213; /* Green */
         }
 
-        .ball.purple {
-            background-color: purple;
+        .album-item[data-color="yellow"] .lp-label {
+            background-color: #9c9695; /* Yellow */
         }
 
-        .ball.orange {
-            background-color: orange;
+        .album-item[data-color="purple"] .lp-label {
+            background-color: #2686d1; /* Purple */
         }
 
-        .ball.pink {
-            background-color: pink;
+        .album-item[data-color="orange"] .lp-label {
+            background-color: #e5bb20; /* Orange */
         }
 
-        @keyframes float {
-            0% {
-                transform: translateY(0);
-                opacity: 0.7;
-            }
-            50% {
-                transform: translateY(-10vh); /* Rise up to 10% of the viewport height */
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(0);
-                opacity: 0.7;
-            }
+        /* LP rolling out on hover */
+        .album-item:hover .lp {
+            transform: translateY(-50%) translateX(-50%); /* Roll out to halfway the box on the left side */
+        }
+
+        .album-title {
+            margin-top: 10px;
+            font-size: 18px;
+            font-weight: bold;
+            color: var(--color-text);
+        }
+
+        .album-subtext {
+            font-size: 14px;
+            color: var(--color-accent);
+        }
+
+        .audio-controls {
+            display: none;
+        }
+
+        .album-item:hover .audio-controls {
+            display: block;
+        }
+
+        /* Play indicator */
+        .playing-indicator {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            width: 10px;
+            height: 10px;
+            background-color: var(--color-accent);
+            border-radius: 50%;
+            display: none;
+        }
+
+        .album-item.playing .playing-indicator {
+            display: block;
         }
 
         @media (max-width: 600px) {
             .gallery {
                 grid-template-columns: 1fr;
-            }
-
-            .gallery-item {
-                height: 150px; /* Adjust height for smaller screens */
             }
         }
     </style>
@@ -204,10 +217,11 @@
     </div>
     <nav class="navbar" id="navbar">
         <a href="index.html">Home</a>
-        <a href="Spel1.html">Spel 1</a>
+        <a href="Spel1.html">Spel 1</a> <!-- Link to the Game page -->
         <a href="Spel2.html">Spel 2</a>
         <a href="HappyBirthday.html">Filmpje</a> 
         <a href="Music.html">Muziek hal</a>
+        <!-- Link to the Present page -->
     </nav>
 </header>
 
