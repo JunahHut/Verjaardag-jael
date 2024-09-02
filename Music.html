@@ -13,6 +13,8 @@
             --color-card-hover: #aba192;
             --color-text: #90877c;
             --color-accent: #ff6f61;
+            --color-playing: #ff0000; /* Red for playing */
+            --color-not-playing: #ffffff; /* White for not playing */
         }
 
         body {
@@ -185,6 +187,21 @@
             display: block;
         }
 
+        .playing-status {
+            margin-top: 5px;
+            font-size: 14px;
+            color: var(--color-text);
+            font-weight: bold;
+        }
+
+        .playing {
+            color: var(--color-playing);
+        }
+
+        .not-playing {
+            color: var(--color-not-playing);
+        }
+
         @media (max-width: 600px) {
             .gallery {
                 grid-template-columns: 1fr;
@@ -201,25 +218,24 @@
             <img src="https://cdn.pixabay.com/photo/2016/12/12/23/06/grey-1902876_960_720.png" alt="Present Icon" class="present-icon">
         </a>
     </div>
-  <nav class="navbar" id="navbar">
-        <a href="index.html">Home</a>
-        <a href="Spel1.html">Spel 1</a> <!-- Link to the Game page -->
-        <a href="Spel2.html">Spel 2</a>
-        <a href="HappyBirthday.html">Filmpje</a> 
-        <a href="Music.html">Muziek hal</a>
-        <!-- Link to the Present page -->
+    <nav class="navbar" id="navbar">
+        <a href="HappyBirthday.html">Happy Birthday</a>
+        <a href="game.html">Game</a>
+        <a href="present.html">Present</a>
+        <!-- Additional menu items can be added here -->
     </nav>
 </header>
 
 <div class="container">
     <div class="gallery">
-        <div class="album-item" data-color="red" onclick="playSong('Maan ft. Goldband - Stiekem (Official video).mp3')">
+        <div class="album-item" data-color="red" onclick="playSong('song1.mp3', this)">
             <img src="https://cdns-images.dzcdn.net/images/cover/9ae54e805338b9fdfc77a36ebed7850e/1900x1900-000000-80-0-0.jpg" alt="Album 1">
             <div class="lp">
                 <div class="lp-label"></div>
             </div>
             <div class="album-title">Album 1 Title</div>
             <div class="album-subtext">Artist Name 1</div>
+            <div class="playing-status">Not Playing</div>
             <div class="audio-controls">
                 <audio id="song1">
                     <source src="song1.mp3" type="audio/mpeg">
@@ -227,13 +243,14 @@
                 </audio>
             </div>
         </div>
-        <div class="album-item" data-color="blue" onclick="playSong('song2.mp3')">
+        <div class="album-item" data-color="blue" onclick="playSong('song2.mp3', this)">
             <img src="https://excelsior-recordings.com/cdn/shop/files/FACD01-CDartwork_fe34d2c7-7330-4668-83dc-cb67ff2fba5f_1024x1024@2x.jpg?v=1707320734" alt="Album 2">
             <div class="lp">
                 <div class="lp-label"></div>
             </div>
             <div class="album-title">Album 2 Title</div>
             <div class="album-subtext">Artist Name 2</div>
+            <div class="playing-status">Not Playing</div>
             <div class="audio-controls">
                 <audio id="song2">
                     <source src="song2.mp3" type="audio/mpeg">
@@ -241,13 +258,14 @@
                 </audio>
             </div>
         </div>
-        <div class="album-item" data-color="green" onclick="playSong('song3.mp3')">
+        <div class="album-item" data-color="green" onclick="playSong('song3.mp3', this)">
             <img src="https://upload.wikimedia.org/wikipedia/en/a/a4/LadyLady.jpg" alt="Album 3">
             <div class="lp">
                 <div class="lp-label"></div>
             </div>
             <div class="album-title">Album 3 Title</div>
             <div class="album-subtext">Artist Name 3</div>
+            <div class="playing-status">Not Playing</div>
             <div class="audio-controls">
                 <audio id="song3">
                     <source src="song3.mp3" type="audio/mpeg">
@@ -255,13 +273,14 @@
                 </audio>
             </div>
         </div>
-        <div class="album-item" data-color="yellow" onclick="playSong('song4.mp3')">
+        <div class="album-item" data-color="yellow" onclick="playSong('song4.mp3', this)">
             <img src="https://i.scdn.co/image/ab67616d0000b27378bb3f99f7507fba531bbf99" alt="Album 4">
             <div class="lp">
                 <div class="lp-label"></div>
             </div>
             <div class="album-title">Album 4 Title</div>
             <div class="album-subtext">Artist Name 4</div>
+            <div class="playing-status">Not Playing</div>
             <div class="audio-controls">
                 <audio id="song4">
                     <source src="song4.mp3" type="audio/mpeg">
@@ -269,13 +288,14 @@
                 </audio>
             </div>
         </div>
-        <div class="album-item" data-color="purple" onclick="playSong('song5.mp3')">
+        <div class="album-item" data-color="purple" onclick="playSong('song5.mp3', this)">
             <img src="https://i.scdn.co/image/ab67616d0000b2735e1ec3f6b114e4e4924f006f" alt="Album 5">
             <div class="lp">
                 <div class="lp-label"></div>
             </div>
             <div class="album-title">Album 5 Title</div>
             <div class="album-subtext">Artist Name 5</div>
+            <div class="playing-status">Not Playing</div>
             <div class="audio-controls">
                 <audio id="song5">
                     <source src="song5.mp3" type="audio/mpeg">
@@ -283,13 +303,14 @@
                 </audio>
             </div>
         </div>
-        <div class="album-item" data-color="orange" onclick="playSong('song6.mp3')">
+        <div class="album-item" data-color="orange" onclick="playSong('song6.mp3', this)">
             <img src="https://upload.wikimedia.org/wikipedia/en/5/56/1999_Joey_Badass.jpg" alt="Album 6">
             <div class="lp">
                 <div class="lp-label"></div>
             </div>
             <div class="album-title">Album 6 Title</div>
             <div class="album-subtext">Artist Name 6</div>
+            <div class="playing-status">Not Playing</div>
             <div class="audio-controls">
                 <audio id="song6">
                     <source src="song6.mp3" type="audio/mpeg">
@@ -301,15 +322,44 @@
 </div>
 
 <script>
-    function playSong(songId) {
+    let currentlyPlaying = null;
+
+    function playSong(songId, albumItem) {
         const allAudio = document.querySelectorAll('audio');
         allAudio.forEach(audio => {
-            audio.pause();
-            audio.currentTime = 0;
+            if (audio.id !== songId.replace('.mp3', '')) {
+                audio.pause();
+                audio.currentTime = 0;
+            }
         });
 
         const song = document.getElementById(songId.replace('.mp3', ''));
-        song.play();
+        const statusElement = albumItem.querySelector('.playing-status');
+
+        if (song.paused) {
+            song.play();
+            statusElement.textContent = 'Playing';
+            statusElement.classList.add('playing');
+            statusElement.classList.remove('not-playing');
+
+            if (currentlyPlaying && currentlyPlaying !== song) {
+                currentlyPlaying.pause();
+                currentlyPlaying.currentTime = 0;
+                const prevStatus = document.querySelector(`#${currentlyPlaying.id.replace('song', '')}`).closest('.album-item').querySelector('.playing-status');
+                prevStatus.textContent = 'Not Playing';
+                prevStatus.classList.add('not-playing');
+                prevStatus.classList.remove('playing');
+            }
+
+            currentlyPlaying = song;
+        } else {
+            song.pause();
+            song.currentTime = 0;
+            statusElement.textContent = 'Not Playing';
+            statusElement.classList.add('not-playing');
+            statusElement.classList.remove('playing');
+            currentlyPlaying = null;
+        }
     }
 
     function toggleMenu() {
