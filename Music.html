@@ -181,11 +181,11 @@
 
 <div class="container">
     <div class="gallery">
-        <div class="album-item" data-color="red" onclick="playSong('Muziek/Maan ft. Goldband - Stiekem (Official video).mp3', this)">
+        <div class="album-item" data-color="red" onclick="playSong('song1', this)">
             <div class="playing-indicator"></div>
             <img src="https://cdns-images.dzcdn.net/images/cover/9ae54e805338b9fdfc77a36ebed7850e/1900x1900-000000-80-0-0.jpg" alt="Album 1">
             <div class="lp">
-               <button onclick="playAudio()" type="button"> <div class="lp-label"></div> </button>
+                <div class="lp-label"></div>
             </div>
             <div class="album-title">Stiekem Maan ft. Goldband</div>
             <div class="album-subtext">Ons nummertje kan niet ontbreken</div>
@@ -196,7 +196,7 @@
                 </audio>
             </div>
         </div>
-        <div class="album-item" data-color="blue" onclick="playSong('Muziek/song2.mp3', this)">
+        <div class="album-item" data-color="blue" onclick="playSong('song2', this)">
             <div class="playing-indicator"></div>
             <img src="https://excelsior-recordings.com/cdn/shop/files/FACD01-CDartwork_fe34d2c7-7330-4668-83dc-cb67ff2fba5f_1024x1024@2x.jpg?v=1707320734" alt="Album 2">
             <div class="lp">
@@ -211,7 +211,7 @@
                 </audio>
             </div>
         </div>
-        <div class="album-item" data-color="green" onclick="playSong('Muziek/song3.mp3', this)">
+        <div class="album-item" data-color="green" onclick="playSong('song3', this)">
             <div class="playing-indicator"></div>
             <img src="https://upload.wikimedia.org/wikipedia/en/a/a4/LadyLady.jpg" alt="Album 3">
             <div class="lp">
@@ -226,7 +226,7 @@
                 </audio>
             </div>
         </div>
-        <div class="album-item" data-color="yellow" onclick="playSong('Muziek/song4.mp3', this)">
+        <div class="album-item" data-color="yellow" onclick="playSong('song4', this)">
             <div class="playing-indicator"></div>
             <img src="https://i.scdn.co/image/ab67616d0000b27378bb3f99f7507fba531bbf99" alt="Album 4">
             <div class="lp">
@@ -241,7 +241,7 @@
                 </audio>
             </div>
         </div>
-        <div class="album-item" data-color="purple" onclick="playSong('Muziek/song5.mp3', this)">
+        <div class="album-item" data-color="purple" onclick="playSong('song5', this)">
             <div class="playing-indicator"></div>
             <img src="https://i.scdn.co/image/ab67616d0000b2735e1ec3f6b114e4e4924f006f" alt="Album 5">
             <div class="lp">
@@ -256,7 +256,7 @@
                 </audio>
             </div>
         </div>
-        <div class="album-item" data-color="orange" onclick="playSong('Muziek/song6.mp3', this)">
+        <div class="album-item" data-color="orange" onclick="playSong('song6', this)">
             <div class="playing-indicator"></div>
             <img src="https://upload.wikimedia.org/wikipedia/en/5/56/1999_Joey_Badass.jpg" alt="Album 6">
             <div class="lp">
@@ -274,31 +274,21 @@
     </div>
 </div>
 
-    <audio id="myAudio">
-  <source src="horse.ogg" type="audio/ogg">
-  <source src="Maan ft. Goldband - Stiekem (Official video).mp3" type="audio/mpeg">
-  Your browser does not support the audio element.
-</audio>
-
-<p>Click the buttons to play or pause the audio.</p>
-
-<button onclick="playAudio()" type="button">Play Audio</button>
-<button onclick="pauseAudio()" type="button">Pause Audio</button> 
-
 <script>
     let currentSong = null;
 
     function playSong(songId, element) {
         const allAudio = document.querySelectorAll('audio');
         const allItems = document.querySelectorAll('.album-item');
+
         allItems.forEach(item => item.classList.remove('playing'));
 
-        if (currentSong && currentSong !== document.getElementById(songId.replace('.mp3', ''))) {
+        if (currentSong && currentSong !== document.getElementById(songId)) {
             currentSong.pause();
             currentSong.currentTime = 0;
         }
 
-        const song = document.getElementById(songId.replace('.mp3', ''));
+        const song = document.getElementById(songId);
         if (currentSong === song && !song.paused) {
             song.pause();
             currentSong = null;
@@ -313,16 +303,6 @@
         const navbar = document.getElementById('navbar');
         navbar.style.display = navbar.style.display === 'flex' ? 'none' : 'flex';
     }
-
-    var x = document.getElementById("myAudio"); 
-
-function playAudio() { 
-  x.play(); 
-} 
-
-function pauseAudio() { 
-  x.pause(); 
-} 
 </script>
 
 </body>
