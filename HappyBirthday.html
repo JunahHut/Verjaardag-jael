@@ -186,6 +186,24 @@
             margin-top: 80px; /* Adjust this value as needed */
             text-align: center; /* Center the text for better visibility */
         }
+
+        /* Responsive YouTube video */
+        .video-container {
+            position: relative;
+            padding-bottom: 56.25%; /* 16:9 aspect ratio */
+            height: 0;
+            overflow: hidden;
+            max-width: 100%;
+            background: #000;
+        }
+
+        .video-container iframe {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
     </style>
 </head>
 <body>
@@ -206,7 +224,13 @@
     </nav>
 </header>
 <br><br><br><br><br><br><br><br><br>
-<center><iframe width="560" height="315" src="https://www.youtube.com/embed/gS5zRfNZR8A?si=z0nq1cQGEqFw9FqI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe></center>
+
+<!-- Responsive YouTube video -->
+<center>
+    <div class="video-container">
+        <iframe src="https://www.youtube.com/embed/gS5zRfNZR8A?si=z0nq1cQGEqFw9FqI" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+    </div>
+</center>
 
 <!-- Script for Floating Balls -->
 <script>
